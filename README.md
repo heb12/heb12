@@ -34,3 +34,9 @@ And then you are done. Type "Heb12" and type in a verse.
 "John 3 16"
 "Heb 4 12"
 "Gen 1 1-10"
+
+## Building from source:
+```
+Lorem
+i586-pc-msdosdjgpp-gcc fbrp/fbrp.c bibles/web.c main.c -o main.exe
+```
