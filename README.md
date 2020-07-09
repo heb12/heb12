@@ -40,3 +40,6 @@ And then you are done. Type "Heb12" and type in a verse.
 Lorem
 i586-pc-msdosdjgpp-gcc fbrp/fbrp.c bibles/web.c main.c -o main.exe
 ```
+  
+  
+CWSDPMI by Charles W. Sandmann 1996-2010
