@@ -26,9 +26,8 @@ DOS=HIGH,UMB
 Reboot to the floppy, and type these commands:
 ```
 rdisk
-7zdec
 C:
-C:\7zdec x A:\heb12.7z
+A:\7zdec x A:\heb12.7z
 ```
 And then you are done. Type "Heb12" and type in a verse.
 "John 3 16"
