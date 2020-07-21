@@ -1,2 +1,4 @@
 bibles
+*.index
+*.txt
 *.out
