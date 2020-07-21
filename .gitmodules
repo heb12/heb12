@@ -1,0 +1,6 @@
+[submodule "fbrp"]
+	path = fbrp
+	url = https://code.heb12.com/Heb12/fbrp
+[submodule "biblec"]
+	path = biblec
+	url = https://code.heb12.com/Heb12/biblec
