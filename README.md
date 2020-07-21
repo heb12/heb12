@@ -3,8 +3,9 @@ Read the entire Bible on a FreeDOS 1.44mb floppy disk.
 
 ## Building on Linux
 ```
-git clone https://code.heb12.com/heb12/heb12lite
-gcc biblec/biblec.c fbrp/fbrp.c app.c && ./a.out
+git clone --recurse-submodules https://code.heb12.com/heb12/heb12lite
+./startup.sh
+./a.out
 ```
 
 ## Installing from pre-built (FreeDOS)

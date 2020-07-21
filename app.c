@@ -7,8 +7,20 @@
 
 struct Translation loadedTranslations[10];
 
+// Simple function to print strings with text break
+void printBreak(char *string, int length, int breakAt) {
+	int nextBreak = breakAt;
+	for (int c = 0; c < length; c++) {
+		printf("%c", string[c]);
+		if (c == nextBreak) {
+			printf("\n");
+			nextBreak = nextBreak * 2;
+		}
+	}
+}
+
 int main() {
-	printf("%s\n", "Heb12Lite CLI v0.1.0");
+	printf("%s\n", "@ Heb12Lite CLI v0.1.0");
 
 	int tryFile;
 	parseIndexFile(
@@ -29,11 +41,17 @@ int main() {
 		char input[20];
 		fgets(input, 20, stdin);
 		
+		if (input[0] == '?') {
+			printf("%s\n", "@ Type a reference to see the verses");
+			printf("%s\n", "@ Type \"+<number>\" to see the next verse");
+			continue;
+		}
+		
 		int *tryRef;
 		struct Reference ref;
 		parseReference(tryRef, input, &ref);
 		
-		for (int r = 0; r < 1; r++) {
+		for (int r = 0; r < ref.verseX; r++) {
 			int tryGet = 0;
 			char result[30][600];
 			
@@ -53,14 +71,17 @@ int main() {
 				to
 			);
 			
-			if (tryGet != 0) {
-				printf("%s\n", "err");
+			if (tryGet) {
+				printf("%s%d\n", "! Error getting verse: ", tryGet);
 				return tryGet;
 			}
 			
 			for (int i = 0; i < to; i++) {
-				printf("%d. %s\n", (ref.verse[r].r[0] + i), result[i]);
+				printf("\n%d. ", (ref.verse[r].r[0] + i));
+				printBreak(result[i], strlen(result[i]), 70);
 			}
+			
+			printf("\n\n");
 		}
 	}
 }
