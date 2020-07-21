@@ -1,6 +1,13 @@
 # Heb12 DOS
-Read the entire Bible on a DOS 1.44mb floppy disk.
-## Installing from pre-built
+Read the entire Bible on a FreeDOS 1.44mb floppy disk.
+
+## Building on Linux
+```
+git clone https://code.heb12.com/heb12/heb12lite
+gcc biblec/biblec.c fbrp/fbrp.c app.c && ./a.out
+```
+
+## Installing from pre-built (FreeDOS)
 
 ### No floppy:
 Extract the 7z file to desired location, that's it.
