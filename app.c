@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include "fbrp/reference.h"
 #include "fbrp/fbrp.h"
 #include "biblec/biblec.h"
@@ -26,12 +27,13 @@ int main() {
 	parseIndexFile(
 		&tryFile,
 		&loadedTranslations[0],
-		"bibles/web.index",
-		"bibles/web.txt"
+		"bibles/web.i",
+		"bibles/web.t"
 	);
 	
 	if (tryFile) {
-		printf("%s\n", "! File Loading error");
+		printf("%s\n", "! Index loading failure");
+		return 0;
 	} else {
 		printf("%s\n", "@ WEB Bible Loaded");
 	}
@@ -45,6 +47,8 @@ int main() {
 			printf("%s\n", "@ Type a reference to see the verses");
 			printf("%s\n", "@ Type \"+<number>\" to see the next verse");
 			continue;
+		} else if (input[0] == 'x') {
+			return 0;
 		}
 		
 		int *tryRef;
