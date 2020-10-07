@@ -1,5 +1,6 @@
-# Heb12 DOS
-Read the entire Bible on a FreeDOS 1.44mb floppy disk.
+# Heb12 Lite
+Bible command line interface reader.  
+Comes with instructions to compile and run from 1.44mb floppy.  
 
 ## Building on Linux
 ```
@@ -42,11 +43,11 @@ And then you are done. Type "Heb12" and type in a verse.
 "Heb 4 12"
 "Gen 1 1-10"
 
-## Building from source:
+## Building from source (MS-DOS/FreeDOS):
 ```
 Lorem
 i586-pc-msdosdjgpp-gcc fbrp/fbrp.c bibles/web.c main.c -o main.exe
 ```
-  
-  
+
+
 CWSDPMI by Charles W. Sandmann 1996-2010
