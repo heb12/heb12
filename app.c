@@ -32,20 +32,92 @@ void debugPrint(struct Reference *ref) {
 	}
 }
 
+int printVerses(char *input, char fancyPrint) {
+	int *tryRef;
+	struct Reference ref = parseReference(tryRef, input);
 
-int main() {
+	int verses = ref.verseLength;
+	if (verses == 0 && ref.chapterLength == 1) {verses = 1;}
+
+	for (int r = 0; r < verses; r++) {
+		int verseStart = 1;
+		int verseEnd = 0;
+		if (ref.verseLength != 0) {
+			verseStart = ref.verse[r].r[0];
+			verseEnd = ref.verse[r].r[1];
+		}
+
+		int tryReader;
+		struct Reader reader = reader_new(
+			&tryReader,
+			&loadedTranslations[0],
+			ref.book,
+			ref.chapter[0].r[0],
+			verseStart,
+			verseEnd
+		);
+
+		if (tryReader) {
+			printf("! Verse error: %d", tryReader);
+			return 0;
+		}
+
+		while (1) {
+			if (reader_next(&reader)) {break;}
+			if (fancyPrint) {
+				putchar('\n');
+				printf("%d. ", verseStart + reader.linesRead - 1);
+				printBreak(reader.result, 70);
+				putchar('\n');
+			} else {
+				puts(reader.result);
+			}
+		}
+
+		fclose(reader.file);
+	}
+}
+
+int main(int argc, char *argv[]) {
+	// Defaults
+	char *index = "bibles/web.i";
+	char *reference = "John 3 16";
+
+	if (argc != 1) {
+		for (int i = 1; i < argc; i++) {
+			if (argv[i][0] == '-') {
+				if (argv[i][1] == 't') {
+					i++;
+					index = argv[i];
+				} else if (argv[i][1] == 'r') {
+					i++;
+					reference = argv[i];
+				}
+			}
+		}
+
+		int tryFile = 0;
+		parseIndexFile(
+			&tryFile,
+			&loadedTranslations[0],
+			index
+		);
+
+		printVerses(reference, 0);
+		return 0;
+	}
+
 	printf("%s\n", "@ Heb12Lite");
 
 	int tryFile = 0;
 	parseIndexFile(
 		&tryFile,
 		&loadedTranslations[0],
-		"bibles/web.i",
-		"bibles/web.t"
+		index
 	);
 
 	if (tryFile) {
-		printf("%s", "! Index loading failure");
+		printf("%s%d", "! Index loading failure: ", tryFile);
 		return 0;
 	} else {
 		printf("%s", "@ WEB Bible Loaded");
@@ -63,45 +135,6 @@ int main() {
 			return 0;
 		}
 
-
-		int *tryRef;
-		struct Reference ref = parseReference(tryRef, input);
-
-		int verses = ref.verseLength;
-		if (verses == 0 && ref.chapterLength == 1) {verses = 1;}
-
-		for (int r = 0; r < verses; r++) {
-			int verseStart = 1;
-			int verseEnd = 0;
-			if (ref.verseLength != 0) {
-				verseStart = ref.verse[r].r[0];
-				verseEnd = ref.verse[r].r[1];
-			}
-
-			int tryReader;
-			struct Reader reader = reader_new(
-				&tryReader,
-				&loadedTranslations[0],
-				ref.book,
-				ref.chapter[0].r[0],
-				verseStart,
-				verseEnd
-			);
-
-			if (tryReader) {
-				printf("Verse error = %d", tryReader);
-				return 0;
-			}
-
-			while (1) {
-				if (reader_next(&reader)) {break;}
-				putchar('\n');
-				printf("%d. ", verseStart + reader.linesRead - 1);
-				printBreak(reader.result, 70);
-				putchar('\n');
-			}
-
-			fclose(reader.file);
-		}
+		printVerses(input, 1);
 	}
 }
