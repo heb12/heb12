@@ -35,7 +35,7 @@ void debugPrint(struct Reference *ref) {
 int printVerses(char *input, char fancyPrint) {
 	int *tryRef;
 	struct Reference ref = parseReference(tryRef, input);
-
+	
 	int verses = ref.verseLength;
 	if (verses == 0 && ref.chapterLength == 1) {verses = 1;}
 
@@ -81,7 +81,7 @@ int printVerses(char *input, char fancyPrint) {
 int main(int argc, char *argv[]) {
 	// Defaults
 	char *index = "bibles/web.i";
-	char *reference = "John 3 16";
+	char *reference = "John 3 16,17";
 
 	if (argc != 1) {
 		for (int i = 1; i < argc; i++) {
@@ -100,7 +100,7 @@ int main(int argc, char *argv[]) {
 		parseIndexFile(
 			&tryFile,
 			&loadedTranslations[0],
-			index
+			"bibles/web.i"
 		);
 
 		printVerses(reference, 0);
