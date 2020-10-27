@@ -20,6 +20,30 @@ void printBreak(char *string, int breakAt) {
 	}
 }
 
+void printError(int type) {
+	putchar('!');
+	putchar(' ');
+	
+	switch (type) {
+	case FILE_NOT_FOUND:
+		puts("File not found: ");
+		break;
+	case BOOK_NOT_FOUND:
+		puts("Book not found: ");
+		break;
+	case FILE_ERROR:
+		puts("File I/O Error: ");
+		break;
+	default:
+		puts("Unknown Error: ");
+	}
+
+	// Put error as char
+	putchar(type * -1 + '0');
+
+	putchar('\n');	
+}
+
 void debugPrint(struct Reference *ref) {
 	printf("Book: %s\n", ref->book);
 
@@ -58,7 +82,7 @@ int printVerses(char *input, char fancyPrint) {
 		);
 
 		if (tryReader) {
-			printf("! Verse error: %d", tryReader);
+			printError(tryReader);
 			return 0;
 		}
 
@@ -76,6 +100,8 @@ int printVerses(char *input, char fancyPrint) {
 
 		fclose(reader.file);
 	}
+
+	putchar('\n');
 }
 
 int main(int argc, char *argv[]) {
@@ -107,7 +133,7 @@ int main(int argc, char *argv[]) {
 		return 0;
 	}
 
-	printf("%s\n", "@ Heb12Lite");
+	puts("@ Heb12Lite");
 
 	int tryFile = 0;
 	parseIndexFile(
@@ -117,14 +143,14 @@ int main(int argc, char *argv[]) {
 	);
 
 	if (tryFile) {
-		printf("%s%d", "! Index loading failure: ", tryFile);
+		printError(tryFile);
 		return 0;
 	} else {
-		printf("%s", "@ WEB Bible Loaded");
+		puts("@ Web Bible Loaded");
 	}
 
 	while (1) {
-		printf("\n: ");
+		printf(": ");
 		char input[50];
 		fgets(input, 50, stdin);
 
