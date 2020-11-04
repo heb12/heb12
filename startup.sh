@@ -1,3 +1,4 @@
+#!/bin/bash
 # Run this on start
 mkdir bibles
 wget http://api.heb12.com/translations/json/en/web.json
