@@ -83,7 +83,7 @@ int printVerses(char *input, char fancyPrint) {
 
 		if (tryReader) {
 			printError(tryReader);
-			return 0;
+			return -1;
 		}
 
 		while (1) {
@@ -98,17 +98,23 @@ int printVerses(char *input, char fancyPrint) {
 			}
 		}
 
+		if (fancyPrint) {
+			putchar('\n');
+		}
+
 		fclose(reader.file);
 	}
 
-	putchar('\n');
+	return 0;
 }
 
 int main(int argc, char *argv[]) {
+
 	// Defaults
-	char *index = "bibles/web.i";
+	char *index = "bibles/kjv2000.i";
 	char *reference = "John 3 16,17";
 
+	// Parse if the user wants a command line interface
 	if (argc != 1) {
 		for (int i = 1; i < argc; i++) {
 			if (argv[i][0] == '-') {
@@ -126,8 +132,12 @@ int main(int argc, char *argv[]) {
 		parseIndexFile(
 			&tryFile,
 			&loadedTranslations[0],
-			"bibles/web.i"
+			index
 		);
+
+		if (tryFile) {
+			printError(tryFile);
+		}
 
 		printVerses(reference, 0);
 		return 0;
@@ -163,4 +173,6 @@ int main(int argc, char *argv[]) {
 
 		printVerses(input, 1);
 	}
+
+	return 0;
 }
