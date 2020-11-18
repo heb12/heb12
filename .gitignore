@@ -8,3 +8,6 @@ bibles
 *.7Z
 *.json
 web.json
+*.i
+*.t
+heb12

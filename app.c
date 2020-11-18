@@ -44,21 +44,8 @@ void printError(int type) {
 	putchar('\n');	
 }
 
-void debugPrint(struct Reference *ref) {
-	printf("Book: %s\n", ref->book);
-
-	for (int c = 0; c < ref->chapterLength; c++) {
-		printf("Chapter: %d-%d\n", ref->chapter[c].r[0], ref->chapter[c].r[1]);
-	}
-
-	for (int c = 0; c < ref->verseLength; c++) {
-		printf("Verse: %d-%d\n", ref->verse[c].r[0], ref->verse[c].r[1]);
-	}
-}
-
 int printVerses(char *input, char fancyPrint) {
-	int *tryRef;
-	struct Reference ref = parseReference(tryRef, input);
+	struct Reference ref = parseReference(input);
 	
 	int verses = ref.verseLength;
 	if (verses == 0 && ref.chapterLength == 1) {verses = 1;}
@@ -111,8 +98,8 @@ int printVerses(char *input, char fancyPrint) {
 int main(int argc, char *argv[]) {
 
 	// Defaults
-	char *index = "bibles/kjv2000.i";
-	char *reference = "John 3 16,17";
+	char *index = "bibles/web.i";
+	char *reference = "Ps 139 14";
 
 	// Parse if the user wants a command line interface
 	if (argc != 1) {
