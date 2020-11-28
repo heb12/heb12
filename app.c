@@ -7,7 +7,7 @@
 #include "biblec/main.h"
 #include "biblec/biblec.h"
 
-struct Translation loadedTranslations[10];
+struct Translation translation;
 
 // Simple function to print strings with text break
 void printBreak(char *string, int breakAt) {
@@ -61,7 +61,7 @@ int printVerses(char *input, char fancyPrint) {
 		int tryReader;
 		struct Reader reader = reader_new(
 			&tryReader,
-			&loadedTranslations[0],
+			&translation,
 			ref.book,
 			ref.chapter[0].r[0],
 			verseStart,
@@ -96,10 +96,8 @@ int printVerses(char *input, char fancyPrint) {
 }
 
 int main(int argc, char *argv[]) {
-
-	// Defaults
 	char *index = "bibles/web.i";
-	char *reference = "Ps 139 14";
+	char *reference = "Ps 1 1";
 
 	// Parse if the user wants a command line interface
 	if (argc != 1) {
@@ -118,7 +116,7 @@ int main(int argc, char *argv[]) {
 		int tryFile = 0;
 		parseIndexFile(
 			&tryFile,
-			&loadedTranslations[0],
+			&translation,
 			index
 		);
 
@@ -135,7 +133,7 @@ int main(int argc, char *argv[]) {
 	int tryFile = 0;
 	parseIndexFile(
 		&tryFile,
-		&loadedTranslations[0],
+		&translation,
 		index
 	);
 
@@ -143,7 +141,7 @@ int main(int argc, char *argv[]) {
 		printError(tryFile);
 		return 0;
 	} else {
-		puts("@ Web Bible Loaded");
+		puts("@ Default Bible Loaded");
 	}
 
 	while (1) {
