@@ -1,11 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 #include "fbrp/reference.h"
 #include "fbrp/fbrp.h"
 #include "biblec/main.h"
 #include "biblec/biblec.h"
+#include "option.h"
 
 struct Translation translation;
 
@@ -44,7 +46,7 @@ void printError(int type) {
 	putchar('\n');	
 }
 
-int printVerses(char *input, char fancyPrint) {
+int printVerses(char *input, bool fancyPrint) {
 	struct Reference ref = parseReference(input);
 	
 	int verses = ref.verseLength;
@@ -96,19 +98,16 @@ int printVerses(char *input, char fancyPrint) {
 }
 
 int main(int argc, char *argv[]) {
-	char *index = "bibles/web.i";
-	char *reference = "Ps 1 1";
-
 	// Parse if the user wants a command line interface
 	if (argc != 1) {
 		for (int i = 1; i < argc; i++) {
 			if (argv[i][0] == '-') {
 				if (argv[i][1] == 't') {
 					i++;
-					index = argv[i];
+					defaultIndex = argv[i];
 				} else if (argv[i][1] == 'r') {
 					i++;
-					reference = argv[i];
+					defaultReference = argv[i];
 				}
 			}
 		}
@@ -117,14 +116,14 @@ int main(int argc, char *argv[]) {
 		parseIndexFile(
 			&tryFile,
 			&translation,
-			index
+			defaultIndex
 		);
 
 		if (tryFile) {
 			printError(tryFile);
 		}
 
-		printVerses(reference, 0);
+		printVerses(defaultReference, 0);
 		return 0;
 	}
 
@@ -134,7 +133,7 @@ int main(int argc, char *argv[]) {
 	parseIndexFile(
 		&tryFile,
 		&translation,
-		index
+		defaultIndex
 	);
 
 	if (tryFile) {
