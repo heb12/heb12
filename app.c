@@ -6,7 +6,6 @@
 #include "fbrp/reference.h"
 #include "fbrp/fbrp.h"
 #include "biblec/main.h"
-#include "biblec/biblec.h"
 #include "option.h"
 
 struct Translation translation;
