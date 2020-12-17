@@ -12,12 +12,13 @@
 struct Translation translation;
 
 // Simple function to print strings with text break
-void printBreak(char *string, int breakAt) {
+void printBreak(char *string, int limit) {
+	int breakAt = limit;
 	for (int c = 0; string[c] != '\0'; c++) {
 		putchar(string[c]);
 		if (c > breakAt && string[c] == ' ') {
 			putchar('\n');
-			breakAt *= 2;
+			breakAt += limit;
 		}
 	}
 }
@@ -40,9 +41,6 @@ void printError(int type) {
 		puts("Unknown Error: ");
 	}
 
-	// Put error as char
-	putchar(type * -1 + '0');
-
 	putchar('\n');	
 }
 
@@ -51,7 +49,7 @@ int printVerses(char *input, bool fancyPrint) {
 	
 	int verses = ref.verseLength;
 	if (verses == 0 && ref.chapterLength == 1) {verses = 1;}
-
+	
 	for (int r = 0; r < verses; r++) {
 		int verseStart = 1;
 		int verseEnd = 0;
@@ -60,7 +58,7 @@ int printVerses(char *input, bool fancyPrint) {
 			verseEnd = ref.verse[r].r[1];
 		}
 
-		int tryReader;
+		int tryReader = 0;
 		struct Reader reader = reader_new(
 			&tryReader,
 			&translation,
