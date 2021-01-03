@@ -4,7 +4,6 @@
 #include <stdbool.h>
 
 #include "fbrp/fbrp.h"
-#include "fbrp/fbrp.h"
 #include "biblec/main.h"
 #include "option.h"
 
