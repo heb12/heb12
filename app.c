@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdbool.h>
 
-#include "fbrp/reference.h"
+#include "fbrp/fbrp.h"
 #include "fbrp/fbrp.h"
 #include "biblec/main.h"
 #include "option.h"
@@ -28,23 +28,24 @@ void printError(int type) {
 	
 	switch (type) {
 	case FILE_NOT_FOUND:
-		puts("File not found: ");
+		puts("File not found.");
 		break;
 	case BOOK_NOT_FOUND:
-		puts("Book not found: ");
+		puts("Book not found.");
 		break;
 	case FILE_ERROR:
-		puts("File I/O Error: ");
+		puts("File I/O Error.");
 		break;
 	default:
-		puts("Unknown Error: ");
+		puts("Unknown Error.");
 	}
 
 	putchar('\n');	
 }
 
 int printVerses(char *input, bool fancyPrint) {
-	struct Reference ref = parseReference(input);
+	struct Reference ref;
+	parseReference(&ref, input);
 	
 	int verses = ref.verseLength;
 	if (verses == 0 && ref.chapterLength == 1) {verses = 1;}
