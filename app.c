@@ -5,7 +5,15 @@
 
 #include "fbrp/fbrp.h"
 #include "biblec/main.h"
-#include "option.h"
+
+// Just in case it didn't go through
+#ifndef DIR
+	#define DIR "bibles/web.i"
+	#define DEF_REF "John 3 16"
+#endif
+
+char *defaultIndex = DIR;
+char *defaultReference = DEF_REF;
 
 struct Translation translation;
 
