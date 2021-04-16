@@ -49,3 +49,4 @@ i586-pc-msdosdjgpp-gcc fbrp/fbrp.c bibles/web.c main.c -o main.exe
 ```
 
 CWSDPMI by Charles W. Sandmann 1996-2010
+Copyright (C) 2020-, Daniel C and other Heb12 contributors You may modify and redistribute this software under the terms of the GPL 2.0 license. See the LICENSE file for more information.
