@@ -10,13 +10,21 @@ test: compile demo
 
 help:
 	@echo "For now, default settings are compiled with the program."
-	@echo "make DIR=$PWD DEF_REF=\"Ps 1 1\""
+	@echo "make				Default, compile heb12cli"
+	@echo "make demo		Runs John 3 16"
+	@echo "make bibles		Install bibles"
+	@echo "make path		Add heb12 to ~/.bashrc"
 
 compile:
 	@$(CC) $(CFLAGS) biblec/biblec.c fbrp/fbrp.c app.c -o heb12
 
 demo:
-	@./heb12 -r "Heb 12 1"
+	@./heb12 -r "John 3 16"
 
-install:
+bibles:
+	@mkdir bibles
+	@wget http://api.heb12.com/translations/biblec/web.i -P bibles/
+	@wget http://api.heb12.com/translations/biblec/web.t -P bibles/
+
+path:
 	echo "export PATH=\$PATH:$PWD >> ~/.bashrc"
