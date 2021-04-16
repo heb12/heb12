@@ -65,9 +65,9 @@ int printVerses(char *input, bool fancyPrint) {
 			verseEnd = ref.verse[r].r[1];
 		}
 
-		int tryReader = 0;
-		struct Reader reader = reader_new(
-			&tryReader,
+		struct Reader reader;
+		int tryReader = reader_new(
+			&reader,
 			&translation,
 			ref.book,
 			ref.chapter[0].r[0],
@@ -117,9 +117,7 @@ int main(int argc, char *argv[]) {
 			}
 		}
 
-		int tryFile = 0;
-		parseIndexFile(
-			&tryFile,
+		int tryFile = parseIndexFile(
 			&translation,
 			defaultIndex
 		);
@@ -134,9 +132,7 @@ int main(int argc, char *argv[]) {
 
 	puts("@ Heb12Lite");
 
-	int tryFile = 0;
-	parseIndexFile(
-		&tryFile,
+	int tryFile = parseIndexFile(
 		&translation,
 		defaultIndex
 	);
@@ -156,7 +152,7 @@ int main(int argc, char *argv[]) {
 		if (input[0] == '?') {
 			printf("\n%s\n", "@ Type a reference to see the verses");
 			continue;
-		} else if (input[0] == 'x') {
+		} else if (input[0] == 'q' || input[0] == 'x') {
 			return 0;
 		}
 

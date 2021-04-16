@@ -13,7 +13,7 @@ help:
 	@echo "make DIR=$PWD DEF_REF=\"Ps 1 1\""
 
 compile:
-	$(CC) $(CFLAGS) biblec/biblec.c fbrp/fbrp.c app.c -o heb12
+	@$(CC) $(CFLAGS) biblec/biblec.c fbrp/fbrp.c app.c -o heb12
 
 demo:
 	@./heb12 -r "Heb 12 1"
