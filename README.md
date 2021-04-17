@@ -44,9 +44,9 @@ And then you are done. Run `heb12` and type in a verse.
 
 ## Building from source (MS-DOS/FreeDOS):
 ```
-TODO: Build instructions..
 make CC=i586-pc-msdosdjgpp-gcc CFLAGS=-O3
 ```
+You can get the MS-DOS compiler from: https://github.com/andrewwutw/build-djgpp/releases
 
 CWSDPMI by Charles W. Sandmann 1996-2010
 Copyright (C) 2020-, Daniel C and other Heb12 contributors You may modify and redistribute this software under the terms of the GPL 2.0 license. See the LICENSE file for more information.
