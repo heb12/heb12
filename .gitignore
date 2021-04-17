@@ -1,3 +1,4 @@
+heb12
 bibles
 *.index
 *.txt
@@ -10,5 +11,8 @@ bibles
 web.json
 *.i
 *.t
-heb12
 option.h
+cwsdpmi.exe
+*.SWP
+*.swp
+CWSDPMI.EXE

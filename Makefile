@@ -8,6 +8,10 @@ CFLAGS := -Wall -D DIR='"bibles/$(DEF_BIB).i"' -D DEF_REF='"$(DEF_REF)"'
 default: compile
 test: compile demo
 
+msdos: msdosconfig compile
+msdosconfig:
+	@i586-pc-msdosdjgpp-gcc $(CFLAGS) -O3 biblec/biblec.c fbrp/fbrp.c app.c
+	
 help:
 	@echo "For now, default settings are compiled with the program."
 	@echo "make				Default, compile heb12cli"
