@@ -37,7 +37,7 @@ rdisk
 C:
 A:\7zdec x A:\heb12.7z
 ```
-And then you are done. Type "Heb12" and type in a verse.  
+And then you are done. Run `heb12` and type in a verse.  
 "John 3 16"  
 "Heb 4 12"  
 "Gen 1 1-10"  
@@ -45,7 +45,7 @@ And then you are done. Type "Heb12" and type in a verse.
 ## Building from source (MS-DOS/FreeDOS):
 ```
 TODO: Build instructions..
-i586-pc-msdosdjgpp-gcc fbrp/fbrp.c bibles/web.c main.c -o main.exe
+make CC=i586-pc-msdosdjgpp-gcc CFLAGS=-O3
 ```
 
 CWSDPMI by Charles W. Sandmann 1996-2010
