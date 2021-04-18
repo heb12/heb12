@@ -20,8 +20,8 @@ echo "char *defaultReference = \"Ps 139 14\";" >> option.h
 echo "Download WEB Bible.."
 mkdir bibles
 cd bibles
-wget https://api.heb12.com/translations/biblec/web.i
-wget https://api.heb12.com/translations/biblec/web.t
+wget https://api.heb12.com/translations/biblec/web.i -P /home/dan/.local/share/heb12/
+wget https://api.heb12.com/translations/biblec/web.t -P /home/dan/.local/share/heb12/
 cd ..
 
 echo "Compiling app"

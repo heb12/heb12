@@ -98,6 +98,7 @@ int printVerses(char *input, bool fancyPrint) {
 }
 
 int main(int argc, char *argv[]) {
+	// Grab default location
 	char buf[256];
 	heb12_data_dir("web.i", sizeof(buf), buf);
 	defaultIndex = buf;
