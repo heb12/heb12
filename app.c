@@ -5,17 +5,13 @@
 
 #include "fbrp/fbrp.h"
 #include "biblec/main.h"
+#include "config.h"
 
-// Just in case it didn't go through
-#ifndef DIR
-	#define DIR "bibles/web.i"
-	#define DEF_REF "John 3 16"
-#endif
+// Development constants
+char *defaultIndex = "bibles/web.i";
+char *defaultReference = "John 3 16";
 
-char *defaultIndex = DIR;
-char *defaultReference = DEF_REF;
-
-struct Translation translation;
+struct Biblec_translation translation;
 
 // Simple function to print strings with text break
 void printBreak(char *string, int limit) {
@@ -65,8 +61,8 @@ int printVerses(char *input, bool fancyPrint) {
 			verseEnd = ref.verse[r].r[1];
 		}
 
-		struct Reader reader;
-		int tryReader = reader_new(
+		struct Biblec_reader reader;
+		int tryReader = biblec_new(
 			&reader,
 			&translation,
 			ref.book,
@@ -80,8 +76,7 @@ int printVerses(char *input, bool fancyPrint) {
 			return -1;
 		}
 
-		while (1) {
-			if (reader_next(&reader)) {break;}
+		while (!biblec_next(&reader)) {
 			if (fancyPrint) {
 				putchar('\n');
 				printf("%d. ", verseStart + reader.linesRead - 1);
@@ -103,21 +98,33 @@ int printVerses(char *input, bool fancyPrint) {
 }
 
 int main(int argc, char *argv[]) {
+	char buf[256];
+	heb12_data_dir("web.i", sizeof(buf), buf);
+	defaultIndex = buf;
+	
 	// Parse if the user wants a command line interface
-	if (argc != 1) {
-		for (int i = 1; i < argc; i++) {
-			if (argv[i][0] == '-') {
-				if (argv[i][1] == 't') {
-					i++;
-					defaultIndex = argv[i];
-				} else if (argv[i][1] == 'r') {
-					i++;
-					defaultReference = argv[i];
-				}
+	for (int i = 1; i < argc; i++) {
+		if (argv[i][0] == '-') {
+			switch (argv[i][1]) {
+			case 't':
+				i++;
+				heb12_data_dir(argv[i], sizeof(buf), buf);
+				strcat(buf, ".i");
+				break;
+			case 'r':
+				i++;
+				defaultReference = argv[i];
+				break;
+			case 'l':
+				defaultIndex = "bibles/web.i";
+				break;
+			default:
+				printf("Invalid option %s\n", argv[i]);
+				return 0;
 			}
 		}
 
-		int tryFile = parseIndexFile(
+		int tryFile = biblec_parse(
 			&translation,
 			defaultIndex
 		);
@@ -130,9 +137,9 @@ int main(int argc, char *argv[]) {
 		return 0;
 	}
 
-	puts("@ Heb12Lite");
+	puts("@ Heb12 CLI");
 
-	int tryFile = parseIndexFile(
+	int tryFile = biblec_parse(
 		&translation,
 		defaultIndex
 	);
