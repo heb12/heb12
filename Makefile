@@ -26,4 +26,4 @@ setup:
 	@wget http://api.heb12.com/translations/biblec/web.t -P $(DIR)
 
 path:
-	echo "export PATH=\$PATH:$PWD" >> ~/.bashrc
+	@echo "export PATH=\\$PATH:$(PWD)" >> ~/.bashrc
