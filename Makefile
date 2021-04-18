@@ -1,5 +1,4 @@
 DIR := /home/dan/.local/share/heb12/
-CC := tcc
 CFLAGS := -Wall
 
 default: compile
