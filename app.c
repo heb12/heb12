@@ -57,8 +57,8 @@ int printVerses(char *input, bool fancyPrint) {
 		int verseStart = 1;
 		int verseEnd = 0;
 		if (ref.verseLength != 0) {
-			verseStart = ref.verse[r].r[0];
-			verseEnd = ref.verse[r].r[1];
+			verseStart = ref.verse[r].range[0];
+			verseEnd = ref.verse[r].range[1];
 		}
 
 		struct Biblec_reader reader;
@@ -66,7 +66,7 @@ int printVerses(char *input, bool fancyPrint) {
 			&reader,
 			&translation,
 			ref.book,
-			ref.chapter[0].r[0],
+			ref.chapter[0].range[0],
 			verseStart,
 			verseEnd
 		);
