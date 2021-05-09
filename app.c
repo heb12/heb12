@@ -74,7 +74,7 @@ int printVerses(char *input, int fancyPrint) {
 			return -1;
 		}
 
-		while (!biblec_next(&reader)) {
+		while (biblec_next(&reader)) {
 			if (fancyPrint) {
 				putchar('\n');
 				printf("%d. ", verseStart + reader.linesRead - 1);
