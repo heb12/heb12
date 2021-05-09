@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdbool.h>
 
 #include "fbrp/fbrp.h"
 #include "biblec/main.h"
@@ -12,6 +11,7 @@ char *defaultIndex = "bibles/web.i";
 char *defaultReference = "John 3 16";
 
 struct Biblec_translation translation;
+struct Reference ref;
 
 // Simple function to print strings with text break
 void printBreak(char *string, int limit) {
@@ -26,15 +26,14 @@ void printBreak(char *string, int limit) {
 }
 
 void printError(int type) {
-	putchar('!');
-	putchar(' ');
+	printf("! ");
 	
 	switch (type) {
 	case FILE_NOT_FOUND:
 		puts("File not found.");
 		break;
 	case BOOK_NOT_FOUND:
-		puts("Book not found.");
+		printf("Book \"%s\" not found.", ref.book);
 		break;
 	case FILE_ERROR:
 		puts("File I/O Error.");
@@ -46,8 +45,7 @@ void printError(int type) {
 	putchar('\n');	
 }
 
-int printVerses(char *input, bool fancyPrint) {
-	struct Reference ref;
+int printVerses(char *input, int fancyPrint) {
 	parseReference(&ref, input);
 	
 	int verses = ref.verseLength;
