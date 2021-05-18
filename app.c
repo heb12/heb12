@@ -5,6 +5,7 @@
 #include "fbrp/fbrp.h"
 #include "biblec/main.h"
 #include "config.h"
+#include "biblesearch/bsearch.h"
 
 // Development constants
 char *defaultIndex = "bibles/web.i";
@@ -95,6 +96,32 @@ int printVerses(char *input, int fancyPrint) {
 	return 0;
 }
 
+// Take the input and try to parse it into
+// the searching array
+// TODO: don't break
+int parseSearchString(char mySearch[5][BSEARCH_MAX_WORD], char input[]) {
+	int w = 0;
+	int wc = 0;
+	for (int c = 0; input[c] != '\0'; c++) {
+		while (input[c] == '\n' || input[c] == '.') {
+			c++;
+		}
+		
+		if (input[c] == ' ') {
+			mySearch[w][wc] = '\0';
+			wc = 0;
+			w++;
+			c++;
+		}
+		
+		mySearch[w][wc] = input[c];
+		wc++;
+	}
+
+	w++;
+	return w;
+}
+
 int main(int argc, char *argv[]) {
 	// Grab default location
 	char buf[256];
@@ -143,19 +170,55 @@ int main(int argc, char *argv[]) {
 		defaultIndex
 	);
 
+	// TODO: Don't force user to do this
 	if (tryFile) {
-		printError(tryFile);
-		return 0;
-	} else {
-		puts("@ Default Bible Loaded");
+		puts("@ Downloading temp WEB Bible...\n");
+		system("curl http://api.heb12.com/translations/biblec/web.i -o /tmp/web.i");
+		system("curl http://api.heb12.com/translations/biblec/web.t -o /tmp/web.t");
+		defaultIndex = "/tmp/web.i";
+
+		biblec_parse(
+			&translation,
+			defaultIndex
+		);
 	}
+
+	printf("@ Default Bible (%s) Loaded\n", translation.location);
 
 	while (1) {
 		printf(": ");
-		char input[50];
-		fgets(input, 50, stdin);
+		char input[128];
+		fgets(input, 128, stdin);
 
-		if (input[0] == '?') {
+		if (!strncmp(input, "search", 6)) {
+			char mySearch[5][BSEARCH_MAX_WORD];
+			
+			printf("@ Search the Bible:\n> ");
+			fgets(input, 128, stdin);
+			int w = parseSearchString(mySearch, input);
+
+			int *result = malloc(BSEARCH_MAX_HITS);
+			int count = bsearch_open(
+				mySearch,
+				w,
+				result,
+				&translation
+			);
+		
+			if (count == -1) {
+				puts("! Searching error.\n");
+			}
+
+			printf("! %d Search result(s) found\n", count);
+		
+			char buffer[128];
+			for (int i = 0; i < count; i++) {
+				bsearch_getVerse(buffer, result[i], &translation);
+				printf("%d\t%s\n", result[i], buffer);
+			}
+		
+			free(result);
+		} else if (input[0] == '?') {
 			printf("\n%s\n", "@ Type a reference to see the verses");
 			continue;
 		} else if (input[0] == 'q' || input[0] == 'x') {

@@ -1,5 +1,7 @@
 DIR := /home/dan/.local/share/heb12/
-CFLAGS := -Wall
+CC := tcc
+CFLAGS := -Wall -O2
+CFLAGS += -I.
 
 default: compile
 demo: compile test
@@ -16,7 +18,7 @@ help:
 	@echo "make path		Add heb12 to ~/.bashrc"
 
 compile:
-	@$(CC) $(CFLAGS) biblec/biblec.c fbrp/fbrp.c config.c app.c -o heb12
+	@$(CC) $(CFLAGS) biblec/biblec.c fbrp/fbrp.c biblesearch/bsearch.c config.c app.c -o heb12
 
 test:
 	@./heb12 -l -r "John 3 16"
