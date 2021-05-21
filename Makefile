@@ -1,14 +1,18 @@
 DIR := /home/dan/.local/share/heb12/
 CC := tcc
-CFLAGS := -Wall -O2
+CFLAGS := -Wall -Wextra -Wpedantic -O2
+
+# Add include directory for BibleSearch
 CFLAGS += -I.
+
+FILES := biblec/biblec.c fbrp/fbrp.c biblesearch/bsearch.c libheb12/*.c main.c
 
 default: compile
 demo: compile test
 
 msdos: msdosconfig compile
 msdosconfig:
-	@i586-pc-msdosdjgpp-gcc $(CFLAGS) -O3 biblec/biblec.c fbrp/fbrp.c app.c
+	@i586-pc-msdosdjgpp-gcc $(CFLAGS) -O3 $(FILES)
 	
 help:
 	@echo "For now, default settings are compiled with the program."
@@ -18,7 +22,7 @@ help:
 	@echo "make path		Add heb12 to ~/.bashrc"
 
 compile:
-	@$(CC) $(CFLAGS) biblec/biblec.c fbrp/fbrp.c biblesearch/bsearch.c config.c app.c -o heb12
+	@$(CC) $(CFLAGS) $(FILES) -o heb12
 
 test:
 	@./heb12 -l -r "John 3 16"

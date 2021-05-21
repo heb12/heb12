@@ -4,7 +4,7 @@
 
 #include "fbrp/fbrp.h"
 #include "biblec/main.h"
-#include "config.h"
+#include "libheb12/config.h"
 #include "biblesearch/bsearch.h"
 
 // Development constants

@@ -1,4 +1,5 @@
 #!/bin/bash
+# This compiles and installs Heb12 cli
 
 # TODO: Check if ~/.local/share/ exists
 
@@ -16,5 +17,5 @@ wget https://api.heb12.com/translations/biblec/web.t
 
 echo "Compiling app"
 cd app
-make
+make CC=cc
 ./heb12 -r "John 3 16"
