@@ -170,20 +170,28 @@ int main(int argc, char *argv[]) {
 		defaultIndex
 	);
 
-	// TODO: Don't force user to do this
 	if (tryFile) {
-		puts("@ Downloading temp WEB Bible...\n");
-		system("curl http://api.heb12.com/translations/biblec/web.i -o /tmp/web.i");
-		system("curl http://api.heb12.com/translations/biblec/web.t -o /tmp/web.t");
-		defaultIndex = "/tmp/web.i";
+		printf("@ Default Bible (%s) not found.\n", defaultIndex);
+		printf("@ Download WEB in /tmp? (y/n) ");
 
-		biblec_parse(
-			&translation,
-			defaultIndex
-		);
+		char input[5];
+		fgets(input, 5, stdin);
+
+		if (input[0] == 'y') {
+			system("curl http://api.heb12.com/translations/biblec/web.i -o /tmp/web.i");
+			system("curl http://api.heb12.com/translations/biblec/web.t -o /tmp/web.t");
+			defaultIndex = "/tmp/web.i";
+	
+			biblec_parse(
+				&translation,
+				defaultIndex
+			);
+		} else {
+			return 1;
+		}
 	}
 
-	printf("@ Default Bible (%s) Loaded\n", translation.location);
+	printf("@ Bible (%s) Loaded\n", translation.location);
 
 	while (1) {
 		printf(": ");
@@ -210,12 +218,16 @@ int main(int argc, char *argv[]) {
 			}
 
 			printf("! %d Search result(s) found\n", count);
+
+			printf("Line\tVerse\n");
 		
 			char buffer[128];
 			for (int i = 0; i < count; i++) {
 				bsearch_getVerse(buffer, result[i], &translation);
 				printf("%d\t%s\n", result[i], buffer);
 			}
+
+			printf("Line\tVerse\n");
 		
 			free(result);
 		} else if (input[0] == '?') {

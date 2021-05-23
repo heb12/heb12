@@ -22,7 +22,7 @@ help:
 	@echo "make path		Add heb12 to ~/.bashrc"
 
 compile:
-	@$(CC) $(CFLAGS) $(FILES) -o heb12
+	$(CC) $(CFLAGS) $(FILES) -o heb12
 
 test:
 	@./heb12 -l -r "John 3 16"
