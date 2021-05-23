@@ -3,7 +3,7 @@
 #include <string.h>
 
 #include "fbrp/fbrp.h"
-#include "biblec/main.h"
+#include "biblec/biblec.h"
 #include "libheb12/config.h"
 #include "biblesearch/bsearch.h"
 
