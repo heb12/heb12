@@ -198,12 +198,12 @@ int main(int argc, char *argv[]) {
 		char input[128];
 		fgets(input, 128, stdin);
 
-		if (!strncmp(input, "search", 6)) {
-			char mySearch[5][BSEARCH_MAX_WORD];
+		if (!strncmp(input, "search:", 7)) {
+			char *inputp = input + 7;
 			
-			printf("@ Search the Bible:\n> ");
-			fgets(input, 128, stdin);
-			int w = parseSearchString(mySearch, input);
+			char mySearch[5][BSEARCH_MAX_WORD];
+
+			int w = parseSearchString(mySearch, inputp);
 
 			int *result = malloc(BSEARCH_MAX_HITS);
 			int count = bsearch_open(
@@ -228,10 +228,13 @@ int main(int argc, char *argv[]) {
 			}
 
 			printf("Line\tVerse\n");
-		
+
 			free(result);
 		} else if (input[0] == '?') {
-			printf("\n%s\n", "@ Type a reference to see the verses");
+			puts("@ Type a reference to see the verses");
+			puts("@ To use a command, use `[name]:[parameters]`");
+			puts("@ Use BibleSearch: `search:beginning created`");
+			puts("@ Type q or x to quit.");
 			continue;
 		} else if (input[0] == 'q' || input[0] == 'x') {
 			return 0;

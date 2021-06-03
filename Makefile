@@ -1,11 +1,17 @@
 DIR := /home/dan/.local/share/heb12/
-CC := tcc
 CFLAGS := -Wall -Wextra -Wpedantic -O2
+CC := gcc
 
 # Add include directory for BibleSearch
 CFLAGS += -I.
 
 FILES := biblec/biblec.c fbrp/fbrp.c biblesearch/bsearch.c libheb12/*.c main.c
+
+# Use curl if no wget
+DOWNLOAD := wget -N
+ifeq (, $(shell which $(DOWNLOAD)))
+DOWNLOAD = -O curl
+endif
 
 default: compile
 demo: compile test
@@ -28,8 +34,8 @@ test:
 	@./heb12 -l -r "John 3 16"
 
 setup:
-	@wget http://api.heb12.com/translations/biblec/web.i -P $(DIR)
-	@wget http://api.heb12.com/translations/biblec/web.t -P $(DIR)
+	$(DOWNLOAD) http://api.heb12.com/translations/biblec/web.i -P $(DIR)
+	$(DOWNLOAD) http://api.heb12.com/translations/biblec/web.t -P $(DIR)
 
 path:
 	@echo "export PATH=\\$PATH:$(PWD)" >> ~/.bashrc
