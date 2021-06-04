@@ -48,6 +48,10 @@ void printError(int type) {
 
 int printVerses(char *input, int fancyPrint) {
 	parseReference(&ref, input);
+
+	if (ref.chapterLength == 0) {
+		puts("! No chapter given\n");
+	}
 	
 	int verses = ref.verseLength;
 	if (verses == 0 && ref.chapterLength == 1) {verses = 1;}
@@ -144,12 +148,25 @@ int main(int argc, char *argv[]) {
 			case 'l':
 				defaultIndex = "bibles/web.i";
 				break;
+			case 'h':
+				printf("Heb12 CLI App\n" \
+					"    -t [translation]  Change the translation\n" \
+					"    -r [reference]    Get Bible Text from a reference\n" \
+					"    -l                Use local bibles/web translation\n" \
+					"Examples:\n" \
+					"    heb12 -t \"web\" -r \"John 3 16-20, 21\"\n\n" \
+					"Current translation: %s\n", defaultIndex
+				);
+
+				return 0;
 			default:
 				printf("Invalid option %s\n", argv[i]);
 				return 0;
 			}
 		}
+	}
 
+	if (argc > 1) {
 		int tryFile = biblec_parse(
 			&translation,
 			defaultIndex
@@ -157,6 +174,7 @@ int main(int argc, char *argv[]) {
 
 		if (tryFile) {
 			printError(tryFile);
+			return -1;
 		}
 
 		printVerses(defaultReference, 0);

@@ -1,5 +1,5 @@
 DIR := /home/dan/.local/share/heb12/
-CFLAGS := -Wall -Wextra -Wpedantic -O2
+CFLAGS := -Wall -Wextra -Wpedantic -O0
 CC := gcc
 
 # Add include directory for BibleSearch
@@ -39,3 +39,6 @@ setup:
 
 path:
 	@echo "export PATH=\\$PATH:$(PWD)" >> ~/.bashrc
+
+bin:
+	@cp heb12 /usr/bin/
