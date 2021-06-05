@@ -127,11 +127,14 @@ int parseSearchString(char mySearch[5][BSEARCH_MAX_WORD], char input[]) {
 }
 
 int main(int argc, char *argv[]) {
+	char downloadBuffer[512];
+	
 	// Grab default location
 	char buf[256];
+	
 	heb12_data_dir("web.i", sizeof(buf), buf);
 	defaultIndex = buf;
-	
+
 	// Parse if the user wants a command line interface
 	for (int i = 1; i < argc; i++) {
 		if (argv[i][0] == '-') {
@@ -190,15 +193,34 @@ int main(int argc, char *argv[]) {
 
 	if (tryFile) {
 		printf("@ Default Bible (%s) not found.\n", defaultIndex);
-		printf("@ Download WEB in /tmp? (y/n) ");
+		printf("@ Download WEB in Heb12 dir? (y/n) ");
 
 		char input[5];
 		fgets(input, 5, stdin);
 
 		if (input[0] == 'y') {
-			system("curl http://api.heb12.com/translations/biblec/web.i -o /tmp/web.i");
-			system("curl http://api.heb12.com/translations/biblec/web.t -o /tmp/web.t");
-			defaultIndex = "/tmp/web.i";
+			heb12_data_dir(NULL, sizeof(buf), buf);
+
+			snprintf(
+				downloadBuffer,
+				sizeof(downloadBuffer),
+				"curl http://api.heb12.com/translations/biblec/web.i -o %s/web.t",
+				buf
+			);
+			
+			system(downloadBuffer);
+
+			snprintf(
+				downloadBuffer,
+				sizeof(downloadBuffer),
+				"curl http://api.heb12.com/translations/biblec/web.i -o %s/web.i",
+				buf
+			);
+			
+			system(downloadBuffer);
+
+			heb12_data_dir("web.i", sizeof(downloadBuffer), downloadBuffer);
+			defaultIndex = downloadBuffer;
 	
 			biblec_parse(
 				&translation,
