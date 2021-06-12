@@ -126,6 +126,33 @@ int parseSearchString(char mySearch[5][BSEARCH_MAX_WORD], char input[]) {
 	return w;
 }
 
+void downloadTranslation(char name[]) {
+	char buffer[1024];
+	
+	char location[512];
+	heb12_data_dir(NULL, sizeof(location), location);
+
+	snprintf(
+		buffer,
+		sizeof(buffer),
+		"curl http://api.heb12.com/translations/biblec/web.t -o %s/%s.t",
+		location,
+		name
+	);
+
+	system(buffer);
+
+	snprintf(
+		buffer,
+		sizeof(buffer),
+		"curl http://api.heb12.com/translations/biblec/web.i -o %s/%s.i",
+		location,
+		name
+	);
+
+	system(buffer);
+}
+
 int main(int argc, char *argv[]) {
 	char downloadBuffer[512];
 	
@@ -155,7 +182,7 @@ int main(int argc, char *argv[]) {
 				printf("Heb12 CLI App\n" \
 					"    -t [translation]  Change the translation\n" \
 					"    -r [reference]    Get Bible Text from a reference\n" \
-					"    -l                Use local bibles/web translation\n" \
+					"    -l                Use local bibles/web translation (for development)\n" \
 					"Examples:\n" \
 					"    heb12 -t \"web\" -r \"John 3 16-20, 21\"\n\n" \
 					"Current translation: %s\n", defaultIndex
@@ -199,25 +226,7 @@ int main(int argc, char *argv[]) {
 		fgets(input, 5, stdin);
 
 		if (input[0] == 'y') {
-			heb12_data_dir(NULL, sizeof(buf), buf);
-
-			snprintf(
-				downloadBuffer,
-				sizeof(downloadBuffer),
-				"curl http://api.heb12.com/translations/biblec/web.i -o %s/web.t",
-				buf
-			);
-			
-			system(downloadBuffer);
-
-			snprintf(
-				downloadBuffer,
-				sizeof(downloadBuffer),
-				"curl http://api.heb12.com/translations/biblec/web.i -o %s/web.i",
-				buf
-			);
-			
-			system(downloadBuffer);
+			downloadTranslation("web");
 
 			heb12_data_dir("web.i", sizeof(downloadBuffer), downloadBuffer);
 			defaultIndex = downloadBuffer;
