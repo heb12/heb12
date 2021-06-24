@@ -3,7 +3,7 @@
 Heb12 command line app. Comes with a command line interface and  
 a user-friendly cross-platform TUI app.  
 
-Runs on MS-DOS, Windows, Linux
+Runs on MS-DOS, Windows, Linux.  
 No external dependencies required. Only C99.  
 
 ## Building on Linux
