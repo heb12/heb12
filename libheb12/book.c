@@ -48,7 +48,7 @@ struct OSISBooks osisbooks[66] = {
 	{"Mat", {"Matthew", "matthew"}, 2},
 	{"Mar", {"Mark", "mark"}, 2},
 	{"Luk", {"Luke", "luke"}, 2},
-	{"Joh", {"John", "john"}, 2},
+	{"John", {"John", "john"}, 2},
 	{"Act", {"Acts", "acts"}, 2},
 	{"Rom", {"Romans", "romans"}, 2},
 	{"1Cor", {"1 Corinthians", "1corinthians"}, 2},
