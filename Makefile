@@ -1,5 +1,5 @@
 DIR := /home/dan/.local/share/heb12/
-CFLAGS := -Wall -Wextra -Wpedantic -O0
+CFLAGS := -Wall -Wextra -Wpedantic -O0 -m32
 CC := gcc
 
 # Add include directory for BibleSearch

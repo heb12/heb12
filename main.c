@@ -4,8 +4,10 @@
 
 #include "fbrp/fbrp.h"
 #include "biblec/biblec.h"
-#include "libheb12/config.h"
 #include "biblesearch/bsearch.h"
+
+#include "libheb12/config.h"
+#include "libheb12/book.h"
 
 // Development constants
 char *defaultIndex = "bibles/web.i";
@@ -49,6 +51,11 @@ void printError(int type) {
 int printVerses(char *input, int fancyPrint) {
 	parseReference(&ref, input);
 
+	// Get standard OSIS from whatever
+	// user gave
+	char osis[sizeof(ref.book)];
+	osisbook(ref.book, osis);
+
 	if (ref.chapterLength == 0) {
 		puts("! No chapter given\n");
 	}
@@ -68,7 +75,7 @@ int printVerses(char *input, int fancyPrint) {
 		int tryReader = biblec_new(
 			&reader,
 			&translation,
-			ref.book,
+			osis,
 			ref.chapter[0].range[0],
 			verseStart,
 			verseEnd
