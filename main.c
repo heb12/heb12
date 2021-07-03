@@ -13,8 +13,8 @@
 char *defaultIndex = "bibles/web.i";
 char *defaultReference = "John 3 16";
 
-struct Biblec_translation translation;
-struct Reference ref;
+struct BiblecTranslation translation;
+struct FbrpReference ref;
 
 // Simple function to print strings with text break
 void printBreak(char *string, int limit) {
@@ -49,12 +49,13 @@ void printError(int type) {
 }
 
 int printVerses(char *input, int fancyPrint) {
-	parseReference(&ref, input);
+	fbrp_parse(&ref, input);
 
 	// Get standard OSIS from whatever
 	// user gave
-	char osis[sizeof(ref.book)];
-	osisbook(ref.book, osis);
+	char osis[128];
+	strncpy(osis, ref.book, sizeof(osis));
+	osisbook(ref.book, osis, sizeof(osis));
 
 	if (ref.chapterLength == 0) {
 		puts("! No chapter given\n");
@@ -71,7 +72,7 @@ int printVerses(char *input, int fancyPrint) {
 			verseEnd = ref.verse[r].range[1];
 		}
 
-		struct Biblec_reader reader;
+		struct BiblecReader reader;
 		int tryReader = biblec_new(
 			&reader,
 			&translation,

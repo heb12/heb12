@@ -1,7 +1,7 @@
 #ifndef BOOK_H
 #define BOOK_H
 
-int osisbook(char *string, char buffer[]);
+int osisbook(char *string, char buffer[], unsigned int size);
 
 struct OSISBooks {
 	char osis[64];

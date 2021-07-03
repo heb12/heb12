@@ -16,8 +16,8 @@ struct OSISBooks osisbooks[66] = {
 	{"Ruth", {"Ruth", "ruth"}, 2},
 	{"1Sam", {"1 Samuel", "1samuel"}, 2},
 	{"2Sam", {"2 Samuel", "2samuel"}, 2},
-	{"1Kng", {"1 Kings", "1kings"}, 2},
-	{"2Kng", {"2 Kings", "2kings"}, 2},
+	{"1Kgs", {"1 Kings", "1kings"}, 2},
+	{"2Kgs", {"2 Kings", "2kings"}, 2},
 	{"1Chr", {"1 Chronicles", "1chronicles"}, 2},
 	{"2Chr", {"2 Chronicles", "2chronicles"}, 2},
 	{"Ezr", {"Ezra", "ezra"}, 2},
@@ -92,20 +92,20 @@ int strcmpcase(char *s1, char *s2) {
 	return diff;
 }
 
-int osisbook(char *string, char buffer[]) {
+int osisbook(char *string, char buffer[], unsigned int size) {
 	#define BOOKSLEN (int)(sizeof(osisbooks) / sizeof(osisbooks[0]))
 	
 	// Loop through all the books
 	for (int b = 0; b < BOOKSLEN; b++) {
 		if (!strcmpcase(string, osisbooks[b].osis)) {
-			strcpy(buffer, osisbooks[b].osis);
+			strncpy(buffer, osisbooks[b].osis, size);
 			return 0;
 		}
 	
 		// Check alt book names
 		for (int a = 0; a < osisbooks[b].length; a++) {
 			if (!strcmpcase(string, osisbooks[b].alt[a])) {
-				strcpy(buffer, osisbooks[b].osis);
+				strncpy(buffer, osisbooks[b].osis, size);
 				return 0;
 			}
 		}
@@ -117,7 +117,7 @@ int osisbook(char *string, char buffer[]) {
 #ifdef TEST
 int main() {
 	char buffer[100];
-	osisbook("Song", buffer);
+	osisbook("1Kng", buffer);
 	puts(buffer);	
 }
 #endif
