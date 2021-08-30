@@ -134,6 +134,7 @@ int parseSearchString(char mySearch[5][BSEARCH_MAX_WORD], char input[]) {
 	return w;
 }
 
+// TODO: Use libcurl
 void downloadTranslation(char name[]) {
 	char buffer[1024];
 	
@@ -141,21 +142,17 @@ void downloadTranslation(char name[]) {
 	heb12_data_dir(NULL, sizeof(location), location);
 
 	snprintf(
-		buffer,
-		sizeof(buffer),
+		buffer, sizeof(buffer),
 		"curl http://api.heb12.com/translations/biblec/web.t -o %s/%s.t",
-		location,
-		name
+		location, name
 	);
 
 	system(buffer);
 
 	snprintf(
-		buffer,
-		sizeof(buffer),
+		buffer, sizeof(buffer),
 		"curl http://api.heb12.com/translations/biblec/web.i -o %s/%s.i",
-		location,
-		name
+		location, name
 	);
 
 	system(buffer);
