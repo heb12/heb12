@@ -12,6 +12,9 @@ git clone --recurse-submodules https://code.heb12.com/heb12/heb12cli
 cd heb12cli; make
 ```
 
+Also, try the one command build+install script:  
+`curl https://raw.githubusercontent.com/heb12/cli/master/install.sh | sh`  
+
 # Building on Windows
 ```
 gcc -I. biblec/biblec.c fbrp/fbrp.c biblesearch/bsearch.c libheb12/*.c main.c -o heb12
