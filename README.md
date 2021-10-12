@@ -6,6 +6,12 @@ a user-friendly cross-platform TUI app.
 Runs on MS-DOS, Windows, Linux.  
 No external dependencies required. Only C99.  
 
+## Quick Install
+Installs WEB Bible into `~/.local/share/heb12/`.  
+```
+curl https://raw.githubusercontent.com/heb12/cli/master/prebuilt.sh | bash
+```
+
 ## Building on Linux
 ```
 git clone --recurse-submodules https://code.heb12.com/heb12/heb12cli  
