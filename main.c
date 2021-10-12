@@ -194,6 +194,9 @@ int main(int argc, char *argv[]) {
 				);
 
 				return 0;
+			case 'v':
+				puts("Heb12 CLI Early Release");
+				return 0;
 			default:
 				printf("Invalid option %s\n", argv[i]);
 				return 0;
