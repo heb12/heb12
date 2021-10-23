@@ -1,13 +1,13 @@
 # Heb12 CLI
-![preview](https://heb12.com/assets/terminal.png)
-Heb12 command line app. Comes with a command line interface and  
+<img src="https://heb12.com/assets/terminal.png" width="800">
+
+Heb12 official command line app. Comes with a command line interface and  
 a user-friendly cross-platform TUI app.  
 
-Runs on MS-DOS, Windows, Linux.  
-No external dependencies required. Only C99.  
+Runs on MS-DOS, Windows, and Linux. No external dependencies required. Only C99.  
 
-## Quick Install
-Installs WEB Bible into `~/.local/share/heb12/`.  
+## Try it Out
+Will install WEB Bible into `~/.local/share/heb12/`.  
 ```
 curl https://raw.githubusercontent.com/heb12/cli/master/prebuilt.sh | bash
 ```
@@ -15,11 +15,9 @@ curl https://raw.githubusercontent.com/heb12/cli/master/prebuilt.sh | bash
 ## Building on Linux
 ```
 git clone --recurse-submodules https://code.heb12.com/heb12/heb12cli  
-cd heb12cli; make
+cd heb12cli
+make
 ```
-
-Also, try the one command build+install script:  
-`curl https://raw.githubusercontent.com/heb12/cli/master/install.sh | sh`  
 
 # Building on Windows
 ```
