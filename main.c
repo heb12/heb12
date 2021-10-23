@@ -143,16 +143,16 @@ void downloadTranslation(char name[]) {
 
 	snprintf(
 		buffer, sizeof(buffer),
-		"curl http://api.heb12.com/translations/biblec/web.t -o %s/%s.t",
-		location, name
+		"curl https://api.heb12.com/translations/biblec/%s.t -o %s/%s.t",
+		name, location, name
 	);
 
 	system(buffer);
 
 	snprintf(
 		buffer, sizeof(buffer),
-		"curl http://api.heb12.com/translations/biblec/web.i -o %s/%s.i",
-		location, name
+		"curl https://api.heb12.com/translations/biblec/%s.i -o %s/%s.i",
+		name, location, name
 	);
 
 	system(buffer);
@@ -289,10 +289,14 @@ int main(int argc, char *argv[]) {
 
 			free(result);
 			continue;
+		} else if (!strncmp(input, "get:", 4)) {
+			downloadTranslation(input + 4);
 		} else if (input[0] == '?') {
 			puts("@ Type a reference to see the verses");
 			puts("@ To use a command, use `[name]:[parameters]`");
-			puts("@ Use BibleSearch: `search:beginning created`");
+			puts("@ Use BibleSearch: `search:the beginning god created`");
+			puts("@ Use Download a translation (curl): `get:web`");
+			puts("@ See https://api.heb12.com/translations/biblec");
 			puts("@ Type q or x to quit.");
 			continue;
 		} else if (input[0] == 'q' || input[0] == 'x') {
