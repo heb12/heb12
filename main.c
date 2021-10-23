@@ -263,6 +263,7 @@ int main(int argc, char *argv[]) {
 			int w = parseSearchString(mySearch, inputp);
 
 			int *result = malloc(BSEARCH_MAX_HITS);
+
 			int count = bsearch_open(
 				mySearch,
 				w,
@@ -287,6 +288,7 @@ int main(int argc, char *argv[]) {
 			printf("Line\tVerse\n");
 
 			free(result);
+			continue;
 		} else if (input[0] == '?') {
 			puts("@ Type a reference to see the verses");
 			puts("@ To use a command, use `[name]:[parameters]`");
