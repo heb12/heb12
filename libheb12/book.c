@@ -57,8 +57,8 @@ struct OSISBooks osisbooks[66] = {
 	{"Eph", {"Ephesians", "ephesians"}, 2},
 	{"Phi", {"Philippians", "philippians"}, 2},
 	{"Col", {"Colossians", "colossians"}, 2},
-	{"1The", {"1 Thessalonians", "1thessalonians"}, 2},
-	{"2The", {"2 Thessalonians", "2thessalonians"}, 2},
+	{"1Thess", {"1 Thessalonians", "1thessalonians"}, 2},
+	{"2Thess", {"2 Thessalonians", "2thessalonians"}, 2},
 	{"1Tim", {"1 Timothy", "1timothy"}, 2},
 	{"2Tim", {"2 Timothy", "2timothy"}, 2},
 	{"Titus", {"Titus", "titus"}, 2},
@@ -67,9 +67,9 @@ struct OSISBooks osisbooks[66] = {
 	{"Jam", {"James", "james"}, 2},
 	{"1Pet", {"1 Peter", "1peter"}, 2},
 	{"2Pet", {"2 Peter", "2peter"}, 2},
-	{"1Joh", {"1 John", "1john"}, 2},
-	{"2Joh", {"2 John", "2john"}, 2},
-	{"3Joh", {"3 John", "3john"}, 2},
+	{"1John", {"1 John", "1john"}, 2},
+	{"2John", {"2 John", "2john"}, 2},
+	{"3John", {"3 John", "3john"}, 2},
 	{"Jude", {"Jude", "jude"}, 2},
 	{"Rev", {"Revelation", "revelation"}, 2}
 };
