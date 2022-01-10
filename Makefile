@@ -16,9 +16,9 @@ heb12:
 	$(CC) $(CFLAGS) $(FILES) -o heb12
 
 setup:
-	mkdir $(DIR)
-	curl http://api.heb12.com/translations/biblec/web.i -o $(DIR)/web.i
-	curl http://api.heb12.com/translations/biblec/web.t -o $(DIR)/web.t
+	-mkdir $(DIR)
+	curl -4 http://api.heb12.com/translations/biblec/web.i -o $(DIR)/web.i
+	curl -4 http://api.heb12.com/translations/biblec/web.t -o $(DIR)/web.t
 
 heb12.exe:
 	@i586-pc-msdosdjgpp-gcc $(CFLAGS) -O2 $(FILES) -o heb12.exe
@@ -29,4 +29,7 @@ static-heb12-x86_64: heb12
 clean:
 	$(RM) heb12 *.o *.out
 
-.PHONY: clean setup help all
+install: heb12 setup
+	cp heb12 /bin/heb12
+
+.PHONY: clean setup help all install
