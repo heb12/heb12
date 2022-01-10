@@ -25,3 +25,8 @@ heb12.exe:
 
 static-heb12-x86_64: heb12
 	staticx heb12 static-heb12-x86_64
+
+clean:
+	$(RM) heb12 *.o *.out
+
+.PHONY: clean setup help all
