@@ -180,6 +180,10 @@ int main(int argc, char *argv[]) {
 				i++;
 				defaultReference = argv[i];
 				break;
+			case 'd':
+				i++;
+				downloadTranslation(argv[i]);
+				break;
 			case 'l':
 				defaultIndex = "bibles/web.i";
 				break;
@@ -187,7 +191,7 @@ int main(int argc, char *argv[]) {
 				printf("Heb12 CLI App\n" \
 					"    -t [translation]  Change the translation\n" \
 					"    -r [reference]    Get Bible Text from a reference\n" \
-					"    -l                Use local bibles/web translation (for development)\n" \
+					"    -d [translation]  Download a translation from https://api.heb12.com/translations/biblec/\n" \
 					"Examples:\n" \
 					"    heb12 -t \"web\" -r \"John 3 16-20, 21\"\n\n" \
 					"Current translation: %s\n", defaultIndex
