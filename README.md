@@ -1,28 +1,34 @@
 # Heb12 CLI
-<img src="https://heb12.com/assets/terminal.png" width="800">
 
-Heb12 official command line app. Comes with a command line interface and  
-a user-friendly cross-platform TUI app.  
+Simple command line Bible tool. Linux, MS-DOS, and Windows.  
+Written from the ground up in C99.
 
-Runs on MS-DOS, Windows, and Linux. No external dependencies required. Only C99.  
+## Usage
+Launching with no parameters opens a basic IDLE like Bible reader prompt.  
+```
+Heb12 CLI App
+    -t [translation]  Set the translation (default WEB)
+    -r [reference]    Get Bible Text from a reference
+    -d [translation]  Download a translation from https://api.heb12.com/translations/biblec/
+Examples:
+    heb12 -t "web" -r "John 3 16-20, 21"
+```
 
-## Try it Out
-Will install WEB Bible into `~/.local/share/heb12/`.  
+## Installation
+Prebuilt install script, will install WEB Bible into `~/.local/share/heb12/`,  
+and `/bin/heb12`.  
 ```
 curl https://raw.githubusercontent.com/heb12/cli/master/prebuilt.sh | bash
 ```
 
+Also available for Arch Linux: https://aur.archlinux.org/packages/heb12-cli-git/  
+
 ## Building on Linux
 ```
-git clone --recurse-submodules https://code.heb12.com/heb12/heb12cli  
-cd heb12cli
+git clone --recurse-submodules https://github.com/heb12/cli/  
+cd cli
 make
 ```
 
-# Building on Windows
-```
-gcc -I. biblec/biblec.c fbrp/fbrp.c biblesearch/bsearch.c libheb12/*.c main.c -o heb12
-```
-
-Copyright (C) 2020-, Daniel, Josias, and other Heb12 contributors.  
+Copyright (C) 2020-2022, Daniel, Josias, and other Heb12 contributors.  
 You may modify and redistribute this software under the terms of the GPL 2.0 license. See the LICENSE file for more information.  
