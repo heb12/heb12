@@ -94,9 +94,7 @@ int printVerses(char *input, int fancyPrint) {
 	return 0;
 }
 
-// Take the input and try to parse it into
-// the searching array
-// TODO: don't break
+// Take the input and try to parse it into searching array
 int parseSearchString(char mySearch[5][BSEARCH_MAX_WORD], char input[]) {
 	int w = 0;
 	int wc = 0;
@@ -107,6 +105,12 @@ int parseSearchString(char mySearch[5][BSEARCH_MAX_WORD], char input[]) {
 		
 		if (input[c] == ' ') {
 			mySearch[w][wc] = '\0';
+
+			// Only include if bigger than two char
+			if (wc > BSEARCH_MIN_WORD) {
+				w++;
+			}
+			
 			wc = 0;
 			w++;
 			c++;
