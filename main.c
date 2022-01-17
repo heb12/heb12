@@ -129,19 +129,20 @@ void downloadTranslation(char name[]) {
 
 	snprintf(
 		buffer, sizeof(buffer),
-		"curl https://api.heb12.com/translations/biblec/%s.t -o %s/%s.t",
-		name, location, name
-	);
-
-	system(buffer);
+		"mkdir -p %s", location
+	); system(buffer);
 
 	snprintf(
 		buffer, sizeof(buffer),
-		"curl https://api.heb12.com/translations/biblec/%s.i -o %s/%s.i",
+		"curl -ipv4 https://api.heb12.com/translations/biblec/%s.t -o %s/%s.t",
 		name, location, name
-	);
+	); system(buffer);
 
-	system(buffer);
+	snprintf(
+		buffer, sizeof(buffer),
+		"curl -ipv4 https://api.heb12.com/translations/biblec/%s.i -o %s/%s.i",
+		name, location, name
+	); system(buffer);
 }
 
 int main(int argc, char *argv[]) {

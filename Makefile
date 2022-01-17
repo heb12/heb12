@@ -24,7 +24,7 @@ static-heb12-x86_64: heb12
 	staticx heb12 static-heb12-x86_64
 
 clean:
-	$(RM) heb12 *.o *.out
+	$(RM) heb12 *.o *.out static*
 
 install: heb12 setup
 	cp heb12 /bin/heb12
