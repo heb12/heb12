@@ -6,18 +6,15 @@ CFLAGS += -I.
 
 FILES := biblec/biblec.c fbrp/fbrp.c biblesearch/bsearch.c libheb12/*.c main.c
 
-all: heb12
-
-help:
-	@echo "make           Default, compile heb12cli"
-	@echo "make setup     Download Bible files into default directory"
-
-heb12:
+heb12: $(FILES)
 	$(CC) $(CFLAGS) $(FILES) -o heb12
 
-setup:
+setup: $(DIR) $(DIR)/web.i $(DIR)/web.t
+$(DIR):
 	-mkdir $(DIR)
+$(DIR)/web.i:
 	curl -4 http://api.heb12.com/translations/biblec/web.i -o $(DIR)/web.i
+$(DIR)/web.t:
 	curl -4 http://api.heb12.com/translations/biblec/web.t -o $(DIR)/web.t
 
 heb12.exe:
