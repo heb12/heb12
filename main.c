@@ -80,17 +80,12 @@ int printVerses(char *input, int fancyPrint) {
 
 		while (biblec_next(&reader)) {
 			if (fancyPrint) {
-				putchar('\n');
 				printf("%d. ", verseStart + reader.linesRead - 1);
 				printBreak(reader.result, 70);
-				putchar('\n');
+				puts("\n");
 			} else {
 				puts(reader.result);
 			}
-		}
-
-		if (fancyPrint) {
-			putchar('\n');
 		}
 
 		fclose(reader.file);
@@ -248,6 +243,7 @@ int main(int argc, char *argv[]) {
 		printf(": ");
 		char input[128];
 		fgets(input, 128, stdin);
+		putchar('\n');
 
 		if (!strncmp(input, "search:", 7)) {
 			char *inputp = input + 7;
