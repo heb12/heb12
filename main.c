@@ -9,10 +9,6 @@
 #include "libheb12/config.h"
 #include "libheb12/book.h"
 
-// Development constants
-char *defaultIndex = "bibles/web.i";
-char *defaultReference = "John 3 16";
-
 struct BiblecTranslation translation;
 struct FbrpReference ref;
 
@@ -28,26 +24,6 @@ void printBreak(char *string, int limit) {
 	}
 }
 
-void printError(int type) {
-	printf("! ");
-	
-	switch (type) {
-	case FILE_NOT_FOUND:
-		puts("File not found.");
-		break;
-	case BOOK_NOT_FOUND:
-		printf("Book \"%s\" not found.", ref.book);
-		break;
-	case FILE_ERROR:
-		puts("File I/O Error.");
-		break;
-	default:
-		puts("Unknown Error.");
-	}
-
-	putchar('\n');	
-}
-
 int printVerses(char *input, int fancyPrint) {
 	fbrp_parse(&ref, input);
 
@@ -58,7 +34,7 @@ int printVerses(char *input, int fancyPrint) {
 	osisbook(ref.book, osis, sizeof(osis));
 
 	if (ref.chapterLength == 0) {
-		puts("! No chapter given\n");
+		puts("! No chapter given");
 	}
 	
 	int verses = ref.verseLength;
@@ -82,9 +58,24 @@ int printVerses(char *input, int fancyPrint) {
 			verseEnd
 		);
 
-		if (tryReader) {
-			printError(tryReader);
-			return -1;
+		switch (tryReader) {
+		case 0:
+			break;
+		case BIBLEC_FILE_ERROR:
+			printf("! Can't open Bible file %s\n", translation.location);
+			return 1;
+		case BIBLEC_BAD_BOOK:
+			printf("! Can't find book %s\n", osis);
+			return 1;
+		case BIBLEC_BAD_CHAPTER:
+			printf("! Bad chapter %u\n", ref.chapter[0].range[0]);
+			return 1;
+		case VERSE_ERROR:
+			printf("! Error in parsing reference '%s'\n", input);
+			return 1;
+		default:
+			printf("! Generic error\n");
+			return 1;
 		}
 
 		while (biblec_next(&reader)) {
@@ -159,15 +150,17 @@ void downloadTranslation(char name[]) {
 }
 
 int main(int argc, char *argv[]) {
+	char *defaultIndex = NULL;
+	char *defaultReference = NULL;
+
 	char downloadBuffer[512];
-	
-	// Grab default location
+
 	char buf[256];
-	
 	heb12_data_dir("web.i", sizeof(buf), buf);
 	defaultIndex = buf;
 
-	// Parse if the user wants a command line interface
+	// Parse if any arguments given
+	int prettyPrint = 0;
 	for (int i = 1; i < argc; i++) {
 		if (argv[i][0] == '-') {
 			switch (argv[i][1]) {
@@ -186,6 +179,9 @@ int main(int argc, char *argv[]) {
 				break;
 			case 'l':
 				defaultIndex = "bibles/web.i";
+				break;
+			case 'p':
+				prettyPrint = 1;
 				break;
 			case 'h':
 				printf("Heb12 CLI App\n" \
@@ -208,38 +204,31 @@ int main(int argc, char *argv[]) {
 		}
 	}
 
-	if (argc > 1) {
-		int tryFile = biblec_parse(
-			&translation,
-			defaultIndex
-		);
-
-		if (tryFile) {
-			printError(tryFile);
-			return -1;
-		}
-
-		printVerses(defaultReference, 0);
-		return 0;
-	}
-
-	puts("@ Heb12 CLI");
-
 	int tryFile = biblec_parse(
 		&translation,
 		defaultIndex
 	);
 
-	if (tryFile) {
+	// Print the cli verses if desired
+	if (argc > 1) {
+		printVerses(defaultReference, prettyPrint);
+		return 0;
+	}
+
+	// Try and download biblec files on startup
+	switch (tryFile) {
+	case 0:
+		break;
+	case FILE_NOT_FOUND:
 		printf("@ Default Bible (%s) not found.\n", defaultIndex);
 		printf("@ Download WEB in Heb12 dir? (y/n) ");
-
+	
 		char input[5];
 		fgets(input, 5, stdin);
-
+	
 		if (input[0] == 'y') {
 			downloadTranslation("web");
-
+	
 			heb12_data_dir("web.i", sizeof(downloadBuffer), downloadBuffer);
 			defaultIndex = downloadBuffer;
 	
@@ -252,6 +241,7 @@ int main(int argc, char *argv[]) {
 		}
 	}
 
+	puts("@ Heb12 CLI");
 	printf("@ Bible (%s) Loaded\n", translation.location);
 
 	while (1) {
@@ -261,11 +251,8 @@ int main(int argc, char *argv[]) {
 
 		if (!strncmp(input, "search:", 7)) {
 			char *inputp = input + 7;
-			
 			char mySearch[5][BSEARCH_MAX_WORD];
-
 			int w = parseSearchString(mySearch, inputp);
-
 			int *result = malloc(BSEARCH_MAX_HITS);
 
 			int count = bsearch_open(
@@ -279,7 +266,7 @@ int main(int argc, char *argv[]) {
 				puts("! Searching error.\n");
 			}
 
-			printf("! %d Search result(s) found\n", count);
+			printf("@ %d Search result(s) found\n", count);
 
 			printf("Line\tVerse\n");
 		
