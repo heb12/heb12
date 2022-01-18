@@ -22,4 +22,4 @@ make CC=gcc
 chmod +x heb12
 
 echo "Done. Will copy 'heb12' to /usr/bin as sudo."
-sudo cp ~/.local/share/heb12/app/heb12 /usrbin/
+sudo cp ~/.local/share/heb12/app/heb12 /usr/bin/
