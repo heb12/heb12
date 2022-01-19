@@ -64,7 +64,7 @@ struct OSISBooks osisbooks[66] = {
 	{"Titus", {"Titus", "titus"}, 2},
 	{"Phil", {"Philemon", "philemon"}, 2},
 	{"Heb", {"Hebrews", "hebrews"}, 2},
-	{"Jam", {"James", "james"}, 2},
+	{"Jas", {"James", "james"}, 2},
 	{"1Pet", {"1 Peter", "1peter", "peter", "pet"}, 4},
 	{"2Pet", {"2 Peter", "2peter"}, 2},
 	{"1John", {"1 John", "1john"}, 2},
