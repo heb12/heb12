@@ -19,7 +19,7 @@ curl -ipv4 -L https://api.heb12.com/translations/biblec/web.t > web.t
 echo "Compiling app"
 cd app
 make CC=gcc
-chmod +x heb12
 
 echo "Done. Will copy 'heb12' to /usr/bin as sudo."
 sudo cp ~/.local/share/heb12/app/heb12 /usr/bin/
+sudo chmod +x /usr/bin/heb12
