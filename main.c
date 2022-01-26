@@ -64,13 +64,13 @@ int printVerses(char *input, int fancyPrint) {
 		case BIBLEC_FILE_ERROR:
 			printf("! Can't open Bible file %s\n", translation.location);
 			return 1;
-		case BIBLEC_BAD_BOOK:
+		case BIBLEC_BOOK_ERROR:
 			printf("! Can't find book %s\n", osis);
 			return 1;
-		case BIBLEC_BAD_CHAPTER:
+		case BIBLEC_CHAPTER_ERROR:
 			printf("! Bad chapter %u\n", ref.chapter[0].range[0]);
 			return 1;
-		case VERSE_ERROR:
+		case BIBLEC_VERSE_ERROR:
 			printf("! Error in parsing reference '%s'\n", input);
 			return 1;
 		default:
@@ -124,6 +124,14 @@ int parseSearchString(char mySearch[5][BSEARCH_MAX_WORD], char input[]) {
 	return w;
 }
 
+// Error reporting wrapper for system()
+void command(char cmd[]) {
+	if (system(cmd)) {
+		printf("Error processing command:\n%s\nQuitting.", cmd);
+		exit(1);
+	}
+}
+
 // TODO: Use libcurl
 void downloadTranslation(char name[]) {
 	char buffer[1024];
@@ -134,19 +142,19 @@ void downloadTranslation(char name[]) {
 	snprintf(
 		buffer, sizeof(buffer),
 		"mkdir -p %s", location
-	); system(buffer);
+	); command(buffer);
 
 	snprintf(
 		buffer, sizeof(buffer),
 		"curl -ipv4 https://api.heb12.com/translations/biblec/%s.t -o %s/%s.t",
 		name, location, name
-	); system(buffer);
+	); command(buffer);
 
 	snprintf(
 		buffer, sizeof(buffer),
 		"curl -ipv4 https://api.heb12.com/translations/biblec/%s.i -o %s/%s.i",
 		name, location, name
-	); system(buffer);
+	); command(buffer);
 }
 
 int main(int argc, char *argv[]) {
@@ -184,12 +192,13 @@ int main(int argc, char *argv[]) {
 				prettyPrint = 1;
 				break;
 			case 'h':
-				printf("Heb12 CLI App\n" \
-					"    -t [translation]  Change the translation\n" \
-					"    -r [reference]    Get Bible Text from a reference\n" \
-					"    -d [translation]  Download a translation from https://api.heb12.com/translations/biblec/\n" \
-					"Examples:\n" \
-					"    heb12 -t \"web\" -r \"John 3 16-20, 21\"\n\n" \
+				printf("Heb12 CLI App\n"
+					"    -t [translation]  Change the translation\n"
+					"    -r [reference]    Get Bible Text from a reference\n"
+					"    -d [translation]  Download a translation from https://api.heb12.com/translations/biblec/\n"
+					"    -p                Pretty print (line break, verse numbers)"
+					"Examples:\n"
+					"    heb12 -p -r \"John 3 16-20, 21\"\n\n"
 					"Current translation: %s\n", defaultIndex
 				);
 
@@ -242,7 +251,7 @@ int main(int argc, char *argv[]) {
 	}
 
 	puts("@ Heb12 CLI");
-	printf("@ Bible (%s) Loaded\n", translation.location);
+	printf("@ Bible (%s) Loaded\n", translation.name);
 
 	while (1) {
 		printf(": ");
