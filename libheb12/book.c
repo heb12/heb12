@@ -25,7 +25,7 @@ struct OSISBooks osisbooks[66] = {
 	{"Esth", {"Esther", "esther"}, 2},
 	{"Job", {"Job", "job"}, 2},
 	{"Ps", {"Psalms", "psalms"}, 2},
-	{"Prov", {"Proverbs", "proverbs"}, 2},
+	{"Prov", {"Proverbs", "proverbs", "prov"}, 2},
 	{"Eccl", {"Ecclesiastes", "ecclesiastes"}, 2},
 	{"Song", {"Song of Solomon", "songofsolomon", "songs", "sos"}, 4},
 	{"Isa", {"Isaiah", "isaiah"}, 2},
