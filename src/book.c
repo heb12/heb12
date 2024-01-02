@@ -81,12 +81,13 @@ int strcmpcase(char *s1, char *s2) {
 	int diff = 0;
 
 	while (*s1 | *s2) {
-		s1++;
-		s2++;
-
 		if (tolower(*s1) != tolower(*s2)) {
 			diff++;
 		}
+
+		s1++;
+		s2++;
+
 	}
 
 	return diff;
@@ -94,6 +95,8 @@ int strcmpcase(char *s1, char *s2) {
 
 int osisbook(char *string, char buffer[], unsigned int size) {
 	#define BOOKSLEN (int)(sizeof(osisbooks) / sizeof(osisbooks[0]))
+
+	printf("Test: '%s'\n", string);
 	
 	// Loop through all the books
 	for (int b = 0; b < BOOKSLEN; b++) {
@@ -104,8 +107,10 @@ int osisbook(char *string, char buffer[], unsigned int size) {
 	
 		// Check alt book names
 		for (int a = 0; a < osisbooks[b].length; a++) {
+			printf("Test1: %s==%s\n", string, osisbooks[b].alt[a]);
 			if (!strcmpcase(string, osisbooks[b].alt[a])) {
 				strncpy(buffer, osisbooks[b].osis, size);
+				printf("Test2: %s\n", buffer);
 				return 0;
 			}
 		}

@@ -1,9 +1,0 @@
-[submodule "fbrp"]
-	path = fbrp
-	url = git@github.com:heb12/fbrp.git
-[submodule "biblec"]
-	path = biblec
-	url = git@github.com:heb12/biblec.git
-[submodule "biblesearch"]
-	path = biblesearch
-	url = git@github.com:heb12/biblesearch.git

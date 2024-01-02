@@ -9,6 +9,8 @@
 #include "libheb12/config.h"
 #include "libheb12/book.h"
 
+#define HEB12_BIBLEC_REPO "https://raw.githubusercontent.com/heb12/biblec-repo/master"
+
 struct BiblecTranslation translation;
 struct FbrpReference ref;
 
@@ -146,13 +148,13 @@ void downloadTranslation(char name[]) {
 
 	snprintf(
 		buffer, sizeof(buffer),
-		"curl -ipv4 https://api.heb12.com/translations/biblec/%s.t -o %s/%s.t",
+		"curl -ipv4 " HEB12_BIBLEC_REPO "/master/%s.t -o %s/%s.t",
 		name, location, name
 	); command(buffer);
 
 	snprintf(
 		buffer, sizeof(buffer),
-		"curl -ipv4 https://api.heb12.com/translations/biblec/%s.i -o %s/%s.i",
+		"curl -ipv4 " HEB12_BIBLEC_REPO "/%s.i -o %s/%s.i",
 		name, location, name
 	); command(buffer);
 }
