@@ -1,0 +1,5 @@
+bibles/
+*.json
+main
+*.out
+*.xml
