@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Spinner
+                android:id="@+id/book_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:layout_weight="1"
+                android:gravity="right|end" />
+
+            <Spinner
+                android:id="@+id/chapter_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:layout_weight="1" />
+        </android.support.v7.widget.Toolbar>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" >
+
+            <LinearLayout
+                android:id="@+id/verse_box"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="10dp" />
+        </ScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_prev"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/button"
+                android:foreground="@drawable/ripple"
+                android:text="Previous" />
+
+            <Button
+                android:id="@+id/btn_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/button"
+                android:foreground="@drawable/ripple"
+                android:text="Next" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nv_navigation_drawer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="start">
+
+        <include
+            layout="@layout/sidebar"/>
+    </android.support.design.widget.NavigationView>
+
+</android.support.v4.widget.DrawerLayout>

@@ -1,0 +1,49 @@
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.0.4'
+    }
+}
+
+plugins {
+    id 'com.android.application' version '7.4.2'
+}
+
+android {
+    namespace 'dev.danielc.heb12'
+    compileSdkVersion 33
+
+    defaultConfig {
+        resConfigs "en"
+        minSdk 21
+        targetSdk 33
+        versionCode 1
+        versionName "0.1.0"
+    }
+
+    externalNativeBuild {
+        ndkBuild {
+            path file('lib/Android.mk')
+        }
+    }
+    buildTypes {
+        release {
+            shrinkResources true
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'),
+            'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+        }
+    }
+}
+
+dependencies {
+    //noinspection GradleCompatible
+    implementation "com.android.support:appcompat-v7:1.0.0"
+    //noinspection GradleCompatible
+    implementation "com.android.support:design:25.4.0"
+}
