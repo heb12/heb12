@@ -10,7 +10,11 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Spinner;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,6 +23,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
 	public native static void StartUI(Context ctx);
+
+    public class CustomAdapter extends BaseAdapter {
+        public CustomAdapter() {
+        }
+
+        @Override
+        public int getCount() {
+            return 100;
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            return new Button(MainActivity.this);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,10 +60,11 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        LayoutInflater inflater = getLayoutInflater();
-        View my = inflater.inflate(R.layout.verse, null);
+        //StartUI(this);
 
-        StartUI(this);
+        setContentView(R.layout.test);
+        ListView lv = (ListView)findViewById(R.id.list);
+        lv.setAdapter(new CustomAdapter());
     }
 
     @Override
@@ -42,8 +72,6 @@ public class MainActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             ((DrawerLayout)findViewById(R.id.drawer_layout)).openDrawer(Gravity.LEFT);
         }
-
         return false;
     }
-
 }

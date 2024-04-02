@@ -14,8 +14,8 @@ struct Heb12App {
 	int book;
 	int chapter;
 }app = {
-		.chapter = 0,
-		.book = 0,
+	.chapter = 0,
+	.book = 0,
 };
 
 uiBox *verse_box = NULL;
@@ -43,8 +43,12 @@ static void update_chapters() {
 
 static void click_next(uiButton *btn, void *data) {
 	if (app.chapter >= Bible_info.books[app.book].chapter - 1) {
+		if (app.book == BIBLE_BOOKS - 1) {
+			app.book = 0;
+		} else {
+			app.book++;
+		}
 		app.chapter = 0;
-		app.book++;
 		update_chapters();
 		uiComboboxSetSelected(book_dropdown, app.book);
 	} else {
@@ -102,7 +106,7 @@ void set_verse(int index, char *init_text) {
 }
 
 void display_chapter(char *bible, int book, int chapter) {
-	//plat_dbg("Showing %d/%d", book, chapter);
+	// plat_dbg("Showing %d/%d", book, chapter);
 	struct Parse p = {0};
 	// Obadiah, Philemon, 2 & 3 John, Jude have one chapter, different structure. This works.
 	if (chapter == 30 || chapter == 56 || chapter == 63 || chapter == 64 || chapter == 65) {
@@ -148,6 +152,7 @@ static void chapter_selected(uiCombobox *c, void *data) {
 JNI_FUNC(void, StartUI)(JNIEnv *env, jobject thiz, jobject ctx) {
 	if (uiAndroidInit(env, ctx)) abort();
 
+
 	verse_box = (uiBox *)uiControlFromID("verse_box");
 
 	book_dropdown = (uiCombobox *)uiControlFromID("book_spinner");
@@ -166,6 +171,7 @@ JNI_FUNC(void, StartUI)(JNIEnv *env, jobject thiz, jobject ctx) {
 	uiButtonOnClicked(btn, click_next, NULL);
 
 	uiButton *btn_prev = (uiButton *)uiControlFromID("btn_prev");
+	uiButtonSetText(btn_prev, uiGet("prev"));
 	uiButtonOnClicked(btn_prev, click_previous, NULL);
 
 	int length;
