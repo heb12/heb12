@@ -60,11 +60,11 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        //StartUI(this);
+        StartUI(this);
 
-        setContentView(R.layout.test);
-        ListView lv = (ListView)findViewById(R.id.list);
-        lv.setAdapter(new CustomAdapter());
+        //setContentView(R.layout.test);
+        //ListView lv = (ListView)findViewById(R.id.list);
+        //lv.setAdapter(new CustomAdapter());
     }
 
     @Override

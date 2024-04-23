@@ -152,6 +152,14 @@ static void chapter_selected(uiCombobox *c, void *data) {
 JNI_FUNC(void, StartUI)(JNIEnv *env, jobject thiz, jobject ctx) {
 	if (uiAndroidInit(env, ctx)) abort();
 
+	jobject jni_get_pref(JNIEnv *env, jobject ctx, char *key);
+
+	jstring value = jni_get_pref(env, ctx, "last_book");
+	if (value == NULL) {
+		plat_dbg("last_book not available yet");
+	} else {
+		plat_dbg("last_book: %p", value);
+	}
 
 	verse_box = (uiBox *)uiControlFromID("verse_box");
 
@@ -175,7 +183,7 @@ JNI_FUNC(void, StartUI)(JNIEnv *env, jobject thiz, jobject ctx) {
 	uiButtonOnClicked(btn_prev, click_previous, NULL);
 
 	int length;
-	app.bible = libu_get_assets_file(env, uiAndroidGetCtx(), "web.json", &length);
+	app.bible = jni_get_assets_file(env, uiAndroidGetCtx(), "web.json", &length);
 
 	display_chapter(app.bible, 0, 0);
 

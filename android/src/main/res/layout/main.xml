@@ -27,7 +27,8 @@
                 android:id="@+id/chapter_spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:dropDownWidth="100dp" />
         </android.support.v7.widget.Toolbar>
 
         <ScrollView

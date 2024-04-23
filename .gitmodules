@@ -1,3 +1,3 @@
 [submodule "android/lib/libuifw"]
-	path = android/lib/libuifw
+	path = libuifw
 	url = https://github.com/petabyt/libuifw

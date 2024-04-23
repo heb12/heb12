@@ -30,7 +30,6 @@ import dev.danielc.heb12.MainActivity;
 
 public class LibUI {
     public static Context ctx = null;
-    public static ActionBar actionBar = null;
 
     // uiWindow (popup) background drawable style resource
     public static int popupDrawableResource = 0;
@@ -40,9 +39,15 @@ public class LibUI {
 
     public static Boolean useActionBar = true;
 
-    public static void start(Activity act) {
+    /// Call on activity onCreate and onResume
+    public static void init(Activity act) {
         ctx = (Context)act;
-        waitUntilActivityLoaded(act);
+        initThiz(act);
+    }
+
+    /// Call on activity onDestroy
+    public static void destroy(Activity a) {
+        destructThiz(a);
     }
 
     // Common way of telling when activity is done loading
@@ -52,16 +57,8 @@ public class LibUI {
             @Override
             public void onGlobalLayout() {
                 activity.getWindow().getDecorView().getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                init();
             }
         });
-    }
-
-    private static void init() {
-        if (useActionBar) {
-            actionBar = ((Activity)ctx).getActionBar();
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
     }
 
     private static class MySelectListener implements AdapterView.OnItemSelectedListener {
@@ -236,6 +233,7 @@ public class LibUI {
         public void setChild(View v) {
             LinearLayout rel = new LinearLayout(ctx);
 
+            ActionBar actionBar = ((Activity)ctx).getActionBar();
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle(title);
 
@@ -316,4 +314,5 @@ public class LibUI {
     public static native void callFunction(byte[] struct);
     public static native Object callObjectFunction(byte[] struct, Object ... args);
     public static native void initThiz(Context ctx);
+    public static native void destructThiz(Context ctx);
 }
