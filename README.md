@@ -1,9 +1,11 @@
-# Heb12 CLI
+# Heb12
 
-Simple command line Bible tool.
+CLI tool and app for reading the Bible.
+- The legacy Electron app: https://github.com/heb12/heb12-electron
+- The legacy Android app: https://github.com/heb12/heb12mobile
 
-## Usage
-Launching with no parameters opens a basic IDLE like Bible reader prompt.  
+## CLI Usage
+Launching with no parameters opens a basic IDLE-like Bible reader prompt.  
 If you prefer shell CLI usage:  
 ```
 Heb12 CLI App
@@ -23,16 +25,10 @@ make
 ```
 
 ## Roadmap
+- [ ] Use JSON OSIS instead of biblec/haplous
 - [ ] Format all C code (snake case?)
 - [x] ~~Updated Desktop app~~ out of scope
-- [ ] Updated Mobile app (https://github.com/heb12/android)
-
-## Installation
-Prebuilt install script, will install WEB Bible into `~/.local/share/heb12/`,  
-and `/bin/heb12`.  
-```
-curl https://raw.githubusercontent.com/heb12/cli/master/prebuilt.sh | bash
-```
+- [ ] Updated Android app
 
 Also available for Arch Linux: https://aur.archlinux.org/packages/heb12-cli-git/  
 
